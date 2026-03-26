@@ -1,0 +1,179 @@
+/* === Reset & Base === */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: #f5f5f5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+a { color: #2563eb; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* === Navbar === */
+.navbar {
+    background: #1e293b;
+    color: white;
+    padding: 0.75rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.nav-brand a { color: white; font-size: 1.25rem; font-weight: 700; text-decoration: none; }
+.nav-links a { color: #cbd5e1; margin-left: 1.5rem; text-decoration: none; }
+.nav-links a:hover { color: white; }
+
+/* === Container === */
+.container { max-width: 1200px; margin: 0 auto; padding: 1.5rem; flex: 1; }
+
+/* === Page header === */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.page-header h1 { font-size: 1.5rem; }
+.header-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+/* === Cards === */
+.card {
+    background: white;
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.card h3 { margin-bottom: 0.75rem; font-size: 1.1rem; color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; }
+.info-card { background: #f0f9ff; border-left: 4px solid #2563eb; }
+.info-card ul { padding-left: 1.5rem; }
+.info-card li { margin-bottom: 0.25rem; }
+
+/* === Buttons === */
+.btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    background: white;
+    color: #333;
+    font-size: 0.875rem;
+    cursor: pointer;
+    text-decoration: none;
+    line-height: 1.4;
+}
+.btn:hover { background: #f9fafb; text-decoration: none; }
+.btn-primary { background: #2563eb; color: white; border-color: #2563eb; }
+.btn-primary:hover { background: #1d4ed8; }
+.btn-success { background: #16a34a; color: white; border-color: #16a34a; }
+.btn-success:hover { background: #15803d; }
+.btn-danger { background: #dc2626; color: white; border-color: #dc2626; }
+.btn-danger:hover { background: #b91c1c; }
+.btn-secondary { background: #6b7280; color: white; border-color: #6b7280; }
+.btn-sm { padding: 0.25rem 0.5rem; font-size: 0.8rem; }
+
+/* === Alerts === */
+.alert { padding: 0.75rem 1rem; border-radius: 6px; margin-bottom: 1rem; }
+.alert-success { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+.alert-error { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+.alert-warning { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+
+/* === Tables === */
+.table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.table th, .table td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid #e5e7eb; }
+.table th { background: #f8fafc; font-weight: 600; color: #475569; font-size: 0.875rem; }
+.table-sm th, .table-sm td { padding: 0.4rem 0.6rem; font-size: 0.9rem; }
+.actions { white-space: nowrap; }
+.inline-form { display: inline; }
+
+/* === Badges === */
+.badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600; }
+.badge-danger { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+.badge-warning { background: #fffbeb; color: #d97706; border: 1px solid #fde68a; }
+.badge-lg { font-size: 1rem; padding: 0.3rem 0.8rem; }
+
+/* === Pictograms === */
+.pictogram-small { display: inline-block; background: #fef3c7; color: #92400e; padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.75rem; margin: 0.1rem; }
+.pictogram-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.5rem; }
+.pictogram-badge { text-align: center; }
+.pictogram-badge img { width: 60px; height: 60px; display: block; margin: 0 auto; }
+.pictogram-badge span { font-size: 0.75rem; color: #666; }
+.pictogram-text { display: inline-block; background: #fef3c7; padding: 0.5rem; border-radius: 4px; font-weight: 600; }
+
+/* === Forms === */
+.form-group { margin-bottom: 1rem; }
+.form-group label { display: block; font-weight: 600; margin-bottom: 0.25rem; font-size: 0.9rem; }
+.form-group input, .form-group textarea, .form-group select {
+    width: 100%; padding: 0.5rem; border: 1px solid #d1d5db; border-radius: 6px; font-size: 0.9rem; font-family: inherit;
+}
+.form-group textarea { resize: vertical; }
+.form-group small { display: block; color: #6b7280; margin-top: 0.25rem; font-size: 0.8rem; }
+.form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 1rem; }
+.form-actions { margin-top: 1rem; display: flex; gap: 0.5rem; }
+
+.checkbox-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+.checkbox-label { display: flex; align-items: center; gap: 0.4rem; font-weight: normal; cursor: pointer; }
+.checkbox-label input { width: auto; }
+
+.upload-form { max-width: 500px; }
+
+/* === Product grid === */
+.product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 1rem; }
+
+/* === Definition list === */
+dl { display: grid; grid-template-columns: auto 1fr; gap: 0.25rem 1rem; }
+dt { font-weight: 600; color: #475569; font-size: 0.9rem; }
+dd { margin: 0; }
+
+.statement-list { list-style: none; padding: 0; }
+.statement-list li { padding: 0.3rem 0; border-bottom: 1px solid #f1f5f9; font-size: 0.9rem; }
+.pre-wrap { white-space: pre-wrap; word-wrap: break-word; font-size: 0.85rem; background: #f8fafc; padding: 0.75rem; border-radius: 4px; max-height: 300px; overflow-y: auto; }
+
+/* === Label preview === */
+.label-container { display: flex; justify-content: center; }
+.label-box {
+    background: white;
+    border: 3px solid #1e293b;
+    border-radius: 8px;
+    padding: 2rem;
+    max-width: 700px;
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.label-section { margin-bottom: 1rem; }
+.label-section h4 { font-size: 0.85rem; text-transform: uppercase; color: #64748b; margin-bottom: 0.4rem; letter-spacing: 0.05em; }
+.label-section p { font-size: 0.9rem; margin-bottom: 0.2rem; }
+.label-product h2 { font-size: 1.3rem; text-align: center; padding-bottom: 0.75rem; border-bottom: 2px solid #1e293b; }
+.label-row { display: flex; justify-content: space-between; align-items: center; margin: 1rem 0; flex-wrap: wrap; gap: 1rem; }
+.label-pictograms { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.label-pictogram img { width: 70px; height: 70px; }
+.pictogram-fallback { width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; border: 2px solid #dc2626; transform: rotate(45deg); font-size: 0.6rem; font-weight: bold; background: white; }
+.label-signal { font-size: 1.5rem; font-weight: 800; text-transform: uppercase; padding: 0.5rem 1.5rem; border-radius: 4px; }
+.signal-danger { background: #fef2f2; color: #dc2626; border: 2px solid #dc2626; }
+.signal-warning { background: #fffbeb; color: #d97706; border: 2px solid #d97706; }
+.label-footer { border-top: 1px solid #e2e8f0; padding-top: 0.75rem; margin-top: 1rem; font-size: 0.85rem; color: #64748b; }
+.label-meta { display: flex; gap: 1.5rem; margin-top: 0.25rem; }
+.label-text-preview { font-size: 0.8rem; max-height: 400px; overflow-y: auto; }
+
+/* === Empty state === */
+.empty-state { text-align: center; padding: 3rem 1rem; }
+.empty-state h2 { color: #64748b; margin-bottom: 0.5rem; }
+.empty-state p { color: #94a3b8; margin-bottom: 1.5rem; }
+
+/* === Footer === */
+.footer { text-align: center; padding: 1rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e5e7eb; margin-top: 2rem; }
+
+/* === Responsive === */
+@media (max-width: 768px) {
+    .navbar { padding: 0.75rem 1rem; flex-direction: column; gap: 0.5rem; }
+    .container { padding: 1rem; }
+    .form-grid, .product-grid { grid-template-columns: 1fr; }
+    .checkbox-grid { grid-template-columns: repeat(2, 1fr); }
+    .page-header { flex-direction: column; align-items: flex-start; }
+}

@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% block title %}{{ product.product_name }} - FDS Manager{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{{ product.product_name }}</h1>
+    <div class="header-actions">
+        <a href="{{ url_for('product_edit', product_id=product.id) }}" class="btn">Modifier</a>
+        <a href="{{ url_for('product_label', product_id=product.id) }}" class="btn btn-success">Générer étiquette</a>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Retour</a>
+    </div>
+</div>
+
+<div class="product-grid">
+    <!-- Identification -->
+    <div class="card">
+        <h3>Identification</h3>
+        <dl>
+            <dt>Nom du produit</dt>
+            <dd>{{ product.product_name }}</dd>
+            <dt>Fabricant</dt>
+            <dd>{{ product.manufacturer or '-' }}</dd>
+            <dt>Infos fournisseur</dt>
+            <dd>{{ product.supplier_info or '-' }}</dd>
+            <dt>Code UFI</dt>
+            <dd>{{ product.ufi_code or '-' }}</dd>
+            <dt>Quantité nette</dt>
+            <dd>{{ product.net_quantity or '-' }}</dd>
+            <dt>Fichier source</dt>
+            <dd>{{ product.source_filename or '-' }}</dd>
+        </dl>
+    </div>
+
+    <!-- Classification -->
+    <div class="card">
+        <h3>Classification des dangers</h3>
+
+        <dt>Mot-signal</dt>
+        <dd>
+            {% if product.signal_word %}
+            <span class="badge badge-{{ 'danger' if product.signal_word == 'Danger' else 'warning' }} badge-lg">
+                {{ product.signal_word }}
+            </span>
+            {% else %}-{% endif %}
+        </dd>
+
+        <dt>Pictogrammes GHS</dt>
+        <dd class="pictogram-row">
+            {% for pic in product.ghs_pictograms_list %}
+            <div class="pictogram-badge">
+                <img src="{{ url_for('static', filename='pictograms/' + pic + '.svg') }}"
+                     alt="{{ pic }}" title="{{ pic }}"
+                     onerror="this.outerHTML='<span class=pictogram-text>{{ pic }}</span>'">
+                <span>{{ pic }}</span>
+            </div>
+            {% endfor %}
+            {% if not product.ghs_pictograms_list %}<span>Aucun</span>{% endif %}
+        </dd>
+    </div>
+
+    <!-- Composition -->
+    <div class="card">
+        <h3>Composition (numéros CAS)</h3>
+        {% if product.cas_numbers %}
+        <table class="table table-sm">
+            <thead><tr><th>CAS</th><th>Substance</th><th>%</th></tr></thead>
+            <tbody>
+            {% for cas in product.cas_numbers %}
+            <tr>
+                <td>{{ cas.cas }}</td>
+                <td>{{ cas.name or '-' }}</td>
+                <td>{{ cas.percent or '-' }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>Aucune substance identifiée.</p>
+        {% endif %}
+    </div>
+
+    <!-- Hazard Statements -->
+    <div class="card">
+        <h3>Mentions de danger (H)</h3>
+        {% if product.hazard_statements %}
+        <ul class="statement-list">
+            {% for h in product.hazard_statements %}
+            <li><strong>{{ h.code }}</strong> - {{ h.text }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>Aucune mention de danger extraite.</p>
+        {% endif %}
+    </div>
+
+    <!-- Precautionary Statements -->
+    <div class="card">
+        <h3>Conseils de prudence (P)</h3>
+        {% if product.precautionary_statements %}
+        <ul class="statement-list">
+            {% for p in product.precautionary_statements %}
+            <li><strong>{{ p.code }}</strong> - {{ p.text }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>Aucun conseil de prudence extrait.</p>
+        {% endif %}
+    </div>
+
+    <!-- Supplemental Info -->
+    {% if product.supplemental_info %}
+    <div class="card">
+        <h3>Informations supplémentaires (EUH)</h3>
+        <pre class="pre-wrap">{{ product.supplemental_info }}</pre>
+    </div>
+    {% endif %}
+
+    <!-- First Aid -->
+    {% if product.first_aid %}
+    <div class="card">
+        <h3>Premiers secours</h3>
+        <pre class="pre-wrap">{{ product.first_aid }}</pre>
+    </div>
+    {% endif %}
+
+    <!-- Storage -->
+    {% if product.storage_handling %}
+    <div class="card">
+        <h3>Manipulation et stockage</h3>
+        <pre class="pre-wrap">{{ product.storage_handling }}</pre>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

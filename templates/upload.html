@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Importer FDS - FDS Manager{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Importer une FDS</h1>
+</div>
+
+<div class="card">
+    <form method="post" enctype="multipart/form-data" class="upload-form">
+        <div class="form-group">
+            <label for="pdf_file">Fichier PDF de la Fiche de Données de Sécurité:</label>
+            <input type="file" name="pdf_file" id="pdf_file" accept=".pdf" required>
+            <small>Format accepté: PDF (max 16 Mo). Le document doit contenir du texte extractible (pas un scan image).</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Extraire les données</button>
+    </form>
+</div>
+
+<div class="card info-card">
+    <h3>Données extraites automatiquement</h3>
+    <ul>
+        <li>Nom du produit et fabricant</li>
+        <li>Numéros CAS et composition</li>
+        <li>Pictogrammes GHS (GHS01-GHS09)</li>
+        <li>Mentions de danger (codes H)</li>
+        <li>Conseils de prudence (codes P)</li>
+        <li>Mot-signal (Danger/Avertissement)</li>
+        <li>Code UFI</li>
+        <li>Premiers secours et stockage</li>
+    </ul>
+    <p><em>Toutes les données extraites peuvent être vérifiées et modifiées après l'import.</em></p>
+</div>
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}Étiquette - {{ product.product_name }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Étiquette CLP</h1>
+    <div class="header-actions">
+        <a href="{{ url_for('label_download', product_id=product.id) }}" class="btn btn-primary">Télécharger (texte)</a>
+        <a href="{{ url_for('product_edit', product_id=product.id) }}" class="btn">Modifier les données</a>
+        <a href="{{ url_for('product_view', product_id=product.id) }}" class="btn btn-secondary">Retour au produit</a>
+    </div>
+</div>
+
+<div class="label-container">
+    <div class="label-box">
+        <!-- Product name -->
+        <div class="label-section label-product">
+            <h2>{{ label.product_identifier }}</h2>
+        </div>
+
+        <!-- Pictograms + Signal word row -->
+        <div class="label-row">
+            <div class="label-pictograms">
+                {% for pic in label.pictograms %}
+                <div class="label-pictogram">
+                    <img src="{{ url_for('static', filename='pictograms/' + pic + '.svg') }}"
+                         alt="{{ pic }}" title="{{ label.pictogram_descriptions.get(pic, pic) }}"
+                         onerror="this.outerHTML='<div class=pictogram-fallback>{{ pic }}</div>'">
+                </div>
+                {% endfor %}
+            </div>
+            {% if label.signal_word %}
+            <div class="label-signal {{ 'signal-danger' if label.signal_word == 'Danger' else 'signal-warning' }}">
+                {{ label.signal_word }}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Hazard statements -->
+        {% if label.hazard_statements %}
+        <div class="label-section">
+            <h4>Mentions de danger</h4>
+            {% for h in label.hazard_statements %}
+            <p>{{ h }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Precautionary statements -->
+        {% if label.precautionary_statements %}
+        <div class="label-section">
+            <h4>Conseils de prudence</h4>
+            {% for p in label.precautionary_statements %}
+            <p>{{ p }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Supplemental info -->
+        {% if label.supplemental_info %}
+        <div class="label-section">
+            <h4>Informations supplémentaires</h4>
+            <p>{{ label.supplemental_info }}</p>
+        </div>
+        {% endif %}
+
+        <!-- Footer: supplier, UFI, quantity -->
+        <div class="label-footer">
+            {% if label.supplier %}
+            <div class="label-supplier">{{ label.supplier }}</div>
+            {% endif %}
+            <div class="label-meta">
+                {% if label.ufi %}<span>UFI: {{ label.ufi }}</span>{% endif %}
+                {% if label.net_quantity %}<span>{{ label.net_quantity }}</span>{% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Plain text preview -->
+<div class="card" style="margin-top: 2rem;">
+    <h3>Aperçu texte brut</h3>
+    <pre class="pre-wrap label-text-preview" id="label-text">{{ label_text }}</pre>
+    <button class="btn btn-sm" onclick="copyLabel()">Copier le texte</button>
+</div>
+
+<script>
+function copyLabel() {
+    const text = document.getElementById('label-text').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+        alert('Texte copié !');
+    });
+}
+</script>
+{% endblock %}

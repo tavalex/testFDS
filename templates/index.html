@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Produits - FDS Manager{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Base de données produits</h1>
+    <a href="{{ url_for('upload') }}" class="btn btn-primary">Importer une FDS</a>
+</div>
+
+{% if products %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nom du produit</th>
+            <th>Fabricant</th>
+            <th>Mot-signal</th>
+            <th>Pictogrammes</th>
+            <th>Fichier source</th>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in products %}
+        <tr>
+            <td><a href="{{ url_for('product_view', product_id=p.id) }}">{{ p.product_name }}</a></td>
+            <td>{{ p.manufacturer or '-' }}</td>
+            <td>
+                {% if p.signal_word %}
+                <span class="badge badge-{{ 'danger' if p.signal_word == 'Danger' else 'warning' }}">
+                    {{ p.signal_word }}
+                </span>
+                {% else %}-{% endif %}
+            </td>
+            <td>
+                {% for pic in p.ghs_pictograms_list %}
+                <span class="pictogram-small" title="{{ pic }}">{{ pic }}</span>
+                {% endfor %}
+                {% if not p.ghs_pictograms_list %}-{% endif %}
+            </td>
+            <td>{{ p.source_filename or '-' }}</td>
+            <td>{{ p.created_at[:10] if p.created_at else '-' }}</td>
+            <td class="actions">
+                <a href="{{ url_for('product_view', product_id=p.id) }}" class="btn btn-sm">Voir</a>
+                <a href="{{ url_for('product_label', product_id=p.id) }}" class="btn btn-sm btn-success">Étiquette</a>
+                <form method="post" action="{{ url_for('product_delete', product_id=p.id) }}" class="inline-form"
+                      onsubmit="return confirm('Supprimer ce produit ?')">
+                    <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="empty-state">
+    <h2>Aucun produit</h2>
+    <p>Importez une Fiche de Données de Sécurité (FDS) pour commencer.</p>
+    <a href="{{ url_for('upload') }}" class="btn btn-primary">Importer une FDS</a>
+</div>
+{% endif %}
+{% endblock %}

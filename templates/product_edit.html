@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% block title %}Modifier {{ product.product_name }} - FDS Manager{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Modifier: {{ product.product_name }}</h1>
+    <a href="{{ url_for('product_view', product_id=product.id) }}" class="btn btn-secondary">Annuler</a>
+</div>
+
+<form method="post" class="edit-form">
+    <div class="form-grid">
+        <!-- Identification -->
+        <div class="card">
+            <h3>Identification</h3>
+            <div class="form-group">
+                <label for="product_name">Nom du produit *</label>
+                <input type="text" name="product_name" id="product_name"
+                       value="{{ product.product_name }}" required>
+            </div>
+            <div class="form-group">
+                <label for="manufacturer">Fabricant</label>
+                <input type="text" name="manufacturer" id="manufacturer"
+                       value="{{ product.manufacturer }}">
+            </div>
+            <div class="form-group">
+                <label for="supplier_info">Infos fournisseur</label>
+                <input type="text" name="supplier_info" id="supplier_info"
+                       value="{{ product.supplier_info }}">
+            </div>
+            <div class="form-group">
+                <label for="ufi_code">Code UFI</label>
+                <input type="text" name="ufi_code" id="ufi_code"
+                       value="{{ product.ufi_code }}">
+            </div>
+            <div class="form-group">
+                <label for="net_quantity">Quantité nette</label>
+                <input type="text" name="net_quantity" id="net_quantity"
+                       value="{{ product.net_quantity }}"
+                       placeholder="ex: 1 L, 500 mL, 25 kg">
+            </div>
+        </div>
+
+        <!-- Signal word & Pictograms -->
+        <div class="card">
+            <h3>Classification</h3>
+            <div class="form-group">
+                <label for="signal_word">Mot-signal</label>
+                <select name="signal_word" id="signal_word">
+                    <option value="">-- Aucun --</option>
+                    <option value="Danger" {{ 'selected' if product.signal_word == 'Danger' }}>Danger</option>
+                    <option value="Avertissement" {{ 'selected' if product.signal_word == 'Avertissement' }}>Avertissement</option>
+                    <option value="Warning" {{ 'selected' if product.signal_word == 'Warning' }}>Warning</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Pictogrammes GHS</label>
+                <div class="checkbox-grid">
+                    {% for code in ['GHS01','GHS02','GHS03','GHS04','GHS05','GHS06','GHS07','GHS08','GHS09'] %}
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="ghs_pictograms" value="{{ code }}"
+                               {{ 'checked' if code in product.ghs_pictograms_list }}>
+                        <span>{{ code }}</span>
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- CAS Numbers -->
+        <div class="card">
+            <h3>Composition (numéros CAS)</h3>
+            <div class="form-group">
+                <label for="cas_numbers_text">Un par ligne, format: CAS | Nom | Pourcentage</label>
+                <textarea name="cas_numbers_text" id="cas_numbers_text" rows="5"
+                          placeholder="64-17-5 | Éthanol | 95-100%">{% for cas in product.cas_numbers %}{{ cas.cas }} | {{ cas.name }} | {{ cas.percent }}
+{% endfor %}</textarea>
+            </div>
+        </div>
+
+        <!-- H-statements -->
+        <div class="card">
+            <h3>Mentions de danger (H)</h3>
+            <div class="form-group">
+                <label for="hazard_statements_text">Une par ligne, format: Hxxx - Description</label>
+                <textarea name="hazard_statements_text" id="hazard_statements_text" rows="8"
+                          placeholder="H225 - Liquide et vapeurs très inflammables">{% for h in product.hazard_statements %}{{ h.code }} - {{ h.text }}
+{% endfor %}</textarea>
+            </div>
+        </div>
+
+        <!-- P-statements -->
+        <div class="card">
+            <h3>Conseils de prudence (P)</h3>
+            <div class="form-group">
+                <label for="precautionary_statements_text">Un par ligne, format: Pxxx - Description</label>
+                <textarea name="precautionary_statements_text" id="precautionary_statements_text" rows="8"
+                          placeholder="P210 - Tenir à l'écart de la chaleur...">{% for p in product.precautionary_statements %}{{ p.code }} - {{ p.text }}
+{% endfor %}</textarea>
+            </div>
+        </div>
+
+        <!-- Supplemental -->
+        <div class="card">
+            <h3>Informations supplémentaires</h3>
+            <div class="form-group">
+                <label for="supplemental_info">Mentions EUH et autres</label>
+                <textarea name="supplemental_info" id="supplemental_info" rows="3">{{ product.supplemental_info }}</textarea>
+            </div>
+        </div>
+
+        <!-- First Aid -->
+        <div class="card">
+            <h3>Premiers secours</h3>
+            <div class="form-group">
+                <textarea name="first_aid" id="first_aid" rows="6">{{ product.first_aid }}</textarea>
+            </div>
+        </div>
+
+        <!-- Storage -->
+        <div class="card">
+            <h3>Manipulation et stockage</h3>
+            <div class="form-group">
+                <textarea name="storage_handling" id="storage_handling" rows="6">{{ product.storage_handling }}</textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+        <a href="{{ url_for('product_view', product_id=product.id) }}" class="btn btn-secondary">Annuler</a>
+    </div>
+</form>
+{% endblock %}
